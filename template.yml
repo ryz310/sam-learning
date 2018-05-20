@@ -1,0 +1,29 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Learning
+
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+
+Globals:
+  Function:
+    Runtime: nodejs8.10
+    CodeUri: ./src
+    MemorySize: 128
+    Timeout: 180
+
+Resources:
+  HelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      FunctionName: !Sub "hello-function-${Stage}"
+      Description: Sample Lambda Function
+      Events:
+        Type: Api
+        Properties:
+          Path: /hello
+          Method: get
